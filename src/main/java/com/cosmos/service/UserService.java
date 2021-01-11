@@ -1,10 +1,10 @@
 package com.cosmos.service;
 
 import com.cosmos.model.Users;
-import com.cosmos.model.backup.UserBackup;
 import com.cosmos.repository.UserBackupRepository;
 import com.cosmos.repository.UserRepository;
 import com.cosmos.util.UserUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -22,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserService {
 	@Autowired
 	private UserRepository userRepository;
@@ -50,7 +50,7 @@ public class UserService {
 			Long l = 0L;
 			int i = 0;
 			Users user = new Users();
-			user.setAddedDate();
+			user.setAddedDate(LocalDate.now());
 			while (itr.hasNext()) {
 				Row row = itr.next();
 				Iterator<Cell> cellIterator = row.cellIterator();
@@ -102,7 +102,7 @@ public class UserService {
 			Long l = 0L;
 			int i = 0;
 			Users user = new Users();
-			user.setAddedDate();
+			user.setAddedDate(LocalDate.now());
 			while (itr.hasNext()) {
 				Row row = itr.next();
 				Iterator<Cell> cellIterator = row.cellIterator();
@@ -147,20 +147,6 @@ public class UserService {
 		return "Success";
 	}
 
-	public String backupUsers() {
-		// TODO Auto-generated method stub
-		List<Users> users = userRepository.findAll();
-		List<UserBackup> backupUsers = new LinkedList<UserBackup>();
-		UserBackup userBackup = null;
-		for (Users user : users) {
-			userBackup = new UserBackup(user.getMobileNumber(), user.getUserName(), user.getLocation(),
-					user.getUserSource(), user.isGotWhatsapp(), user.isUsefull(), user.getAddedDate());
-			backupUsers.add(userBackup);
-		}
-		userBackupRepository.saveAll(backupUsers);
-		return "Success";
-	}
-
 	public Optional<Users> updateByMobileNumber(Long mobileNumber, Users user) {
 		// TODO Auto-generated method stub
 		userRepository.save(user);
@@ -169,7 +155,7 @@ public class UserService {
 
 	public Users saveUser(Users user) {
 		// TODO Auto-generated method stub
-		user.setAddedDate();
+		user.setAddedDate(LocalDate.now());
 		return userRepository.save(user);
 	}
 
@@ -185,17 +171,6 @@ public class UserService {
 		List<Users> users = userRepository.findByDate(yesterday);
 		Optional<List<Users>> u = Optional.ofNullable(users);
 		return u;
-	}
-
-	public void getAllUsersToFile() throws IOException {
-		// TODO Auto-generated method stub
-		List<Users> users = userRepository.findAll();
-		userUtil.toFile(users);	
-	}
-
-	public List<Users> getAllUsersFromFile() throws ClassNotFoundException, IOException {
-		// TODO Auto-generated method stub
-		return userUtil.fromFile();
 	}
 	public List<Users> getAllUsersWhatsappOnly(boolean b) {
 		// TODO Auto-generated method stub

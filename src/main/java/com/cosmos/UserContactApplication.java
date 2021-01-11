@@ -1,5 +1,6 @@
 package com.cosmos;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -9,9 +10,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @EnableEurekaClient
+@Slf4j
 public class UserContactApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(UserContactApplication.class, args);
+		log.info("+++++++++++++++++++++Application UserContactApplication Started++++++++++++++++++++++++++++");
 	}
 	
 	@Bean
