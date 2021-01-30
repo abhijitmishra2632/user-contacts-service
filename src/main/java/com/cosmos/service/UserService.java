@@ -1,7 +1,6 @@
 package com.cosmos.service;
 
 import com.cosmos.model.Users;
-import com.cosmos.repository.UserBackupRepository;
 import com.cosmos.repository.UserRepository;
 import com.cosmos.util.UserUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +27,6 @@ public class UserService {
 
 	@Autowired
 	private UserUtil userUtil;
-	
-	@Autowired
-	private UserBackupRepository userBackupRepository;
 
 	public void addUsersToExcelorCSV() {
 		
