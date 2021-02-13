@@ -1,6 +1,7 @@
 package com.cosmos.service;
 
 import com.cosmos.model.Users;
+import com.cosmos.model.UsersList;
 import com.cosmos.repository.UserRepository;
 import com.cosmos.util.UserUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -155,9 +156,11 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
-	public List<Users> getAllUsers() {
+	public UsersList getAllUsers() {
 		// TODO Auto-generated method stub
-		return userRepository.findAll();
+		UsersList usersList = new UsersList();
+		usersList.setUsersList(userRepository.findAll());
+		return usersList;
 	}
 
 	public Optional<List<Users>> getAllUsersAddedYesterday() {

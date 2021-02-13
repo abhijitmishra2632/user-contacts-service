@@ -1,6 +1,7 @@
 package com.cosmos.controller;
 
 import com.cosmos.model.Users;
+import com.cosmos.model.UsersList;
 import com.cosmos.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/contact")
 @Slf4j
 public class UserController {
 	@Autowired
@@ -19,7 +20,7 @@ public class UserController {
 
 	// Get All users
 	@GetMapping
-	public List<Users> getAllUsers() {
+	public UsersList getAllUsers() {
 		log.info("getAllUsers called");
 		return userService.getAllUsers();
 	}
