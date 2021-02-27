@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +53,10 @@ public class UserController {
 	@GetMapping("/vbyaddeddate/{addedDate}")
 	public List<Users> getAllUsersByAddedDate(@PathVariable LocalDate addedDate) {
 		return userService.getAllUsersByAddedDate(addedDate);
+	}
+	@GetMapping("/readCsv")
+	public String readCsv() throws FileNotFoundException {
+		return userService.readCsv();
 	}
 
 }

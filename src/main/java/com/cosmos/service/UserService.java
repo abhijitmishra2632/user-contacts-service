@@ -1,9 +1,11 @@
 package com.cosmos.service;
 
+import com.cosmos.model.Contact;
 import com.cosmos.model.Users;
 import com.cosmos.model.UsersList;
 import com.cosmos.repository.UserRepository;
 import com.cosmos.util.UserUtil;
+import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -14,11 +16,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.time.LocalDate;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -188,4 +190,23 @@ public class UserService {
 	}
 
 
+    public String readCsv() throws FileNotFoundException {
+		String path ="D:\\AngulCosmosProject\\ContactList.csv";
+		List<Contact> beans = new CsvToBeanBuilder(new FileReader(path))
+				.withType(Contact.class)
+				.build()
+				.parse();
+
+		beans.forEach(s->{
+			String mobile_number = s.getMobileNumber();
+			Long mobileNumber = Long.parseLong(mobile_number);
+			System.out.println(mobileNumber);
+			String added_date = s.getAddedDate();
+			final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			LocalDate localDate = LocalDate.parse(added_date , DATE_FORMAT);
+			Users users = new Users(mobileNumber,s.getUserName(),s.getLocation(),s.getUserSource(),s.isGotWhatsapp(),s.isUsefull(),localDate);
+			userRepository.save(users);
+		});
+		return "Success";
+    }
 }

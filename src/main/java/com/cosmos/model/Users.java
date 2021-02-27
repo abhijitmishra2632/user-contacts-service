@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "usercontacts")
+@Table(name = "ContactsList")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
