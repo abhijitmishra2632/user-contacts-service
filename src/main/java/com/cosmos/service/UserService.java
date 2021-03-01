@@ -173,9 +173,11 @@ public class UserService {
 		Optional<List<Users>> u = Optional.ofNullable(users);
 		return u;
 	}
-	public List<Users> getAllUsersWhatsappOnly(boolean b) {
+	public UsersList getAllUsersWhatsappOnly(boolean b) {
 		// TODO Auto-generated method stub
-		return userRepository.findWhatsappOnly(b);
+		UsersList usersList = new UsersList();
+		usersList.setUsersList(userRepository.findWhatsappOnly(b));
+		return usersList;
 	}
 	public List<Users> getAllUsersByAddedDate(LocalDate addedDate) {
 		// TODO Auto-generated method stub

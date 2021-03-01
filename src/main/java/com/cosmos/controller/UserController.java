@@ -46,9 +46,10 @@ public class UserController {
 	public Optional<List<Users>> getAllUsersAddedYesterday() {
 		return userService.getAllUsersAddedYesterday();
 	}
-	@GetMapping("/vwhatsapponly/{b}")
-	public List<Users> getAllUsersWhatsappOnly(@PathVariable boolean b) {
-		return userService.getAllUsersWhatsappOnly(b);
+	@GetMapping("/vwhatsapponly/{booleanVal}")
+	public UsersList getAllUsersWhatsappOnly(@PathVariable boolean booleanVal) {
+		log.info("getAllUsers called for whatsapp"+booleanVal);
+		return userService.getAllUsersWhatsappOnly(booleanVal);
 	}
 	@GetMapping("/vbyaddeddate/{addedDate}")
 	public List<Users> getAllUsersByAddedDate(@PathVariable LocalDate addedDate) {
